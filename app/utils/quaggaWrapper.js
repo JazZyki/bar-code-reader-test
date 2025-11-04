@@ -1,4 +1,4 @@
-import Quagga from 'quagga2';
+import Quagga from "@ericblade/quagga2";
 
 
 export function decodeWithQuagga(canvas, onDetected, config = {}) {
