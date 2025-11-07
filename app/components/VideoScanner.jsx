@@ -5,6 +5,7 @@ import ScannerControls from "./ScannerControls";
 import { BrowserMultiFormatReader, BarcodeFormat, DecodeHintType } from "@zxing/library";
 import { preprocessCanvas } from "../utils/preprocessImage";
 import { decodeWithQuagga } from "../utils/quaggaWrapper";
+import ScanResult from "./ScanResult";
 
 /**
  * VideoScanner component
@@ -267,7 +268,7 @@ export default function VideoScanner() {
         if (!overlay) return;
         const ctx = overlay.getContext("2d");
         ctx.clearRect(0, 0, overlay.width, overlay.height);
-        ctx.strokeStyle = "orange";
+        ctx.strokeStyle = "red";
         ctx.lineWidth = 3;
         const w = overlay.width * 0.6;
         const h = overlay.height * 0.2;
@@ -506,14 +507,14 @@ export default function VideoScanner() {
     return (
         <div style={{ padding: 20 }}>
             <ScannerControls state={state} setState={setState} />
-
-            <div style={{ position: "relative", width: "100%", maxWidth: 640 }}>
+            <div style={{ marginBottom: 10, display: "flex" }}>
+            <div style={{ position: "relative", width: "100%", display: "flex", flexWrap: "wrap" }}>
                 <video
                     ref={videoRef}
                     autoPlay
                     playsInline
                     muted
-                    style={{ width: "100%", borderRadius: 8, display: "block" }}
+                    style={{ width: "100%", maxWidth: 640, borderRadius: 8, display: "block" }}
                 />
 
                 {/* overlay canvas positioned on top of video for ROI and bounding boxes */}
@@ -559,7 +560,9 @@ export default function VideoScanner() {
                     </div>
                 </div>
             )}
+            </div>
 
+            <ScanResult result={result} />
             <p style={{ marginTop: 10, fontSize: 18 }}>
                 {result ? `📦 Kód: ${result}` : "▶️ Namiř kameru na CODE-128"}
             </p>
